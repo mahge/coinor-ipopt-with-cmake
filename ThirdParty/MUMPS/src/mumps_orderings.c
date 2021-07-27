@@ -347,7 +347,12 @@ MUMPS_SCOTCH( const int * const  n,
 }
 #endif /* scotch */
 #if defined(ptscotch)
-/*#include "mpi.h"
+/*
+#ifdef MPI
+#include "mpi.h"
+#else
+#include "mumps_mpi.h"
+#endif
 #include <stdio.h>
 #include "ptscotch.h"
 int mumps_dgraphinit( SCOTCH_Dgraph *, MPI_Fint *, MPI_Fint *);
