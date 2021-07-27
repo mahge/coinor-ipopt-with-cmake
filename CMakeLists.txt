@@ -24,7 +24,7 @@ option(IPOPT_ENABLE_INEXACT             "Build the inexact solver" OFF)
 set(COIN_IPOPT_CHECKLEVEL "0" CACHE STRING "The debug sanity check level of IpOpt (0 if no test)")
 set(COIN_IPOPT_VERBOSITY  "0" CACHE STRING "The debug verbosity level of IpOpt (0 if no output)")
 
-set(COIN_HAS_MUMPS OFF CACHE BOOL "Enable the Mumps linear solver (default solver enabled)" FORCE)
+set(COIN_HAS_MUMPS ON CACHE BOOL "Enable the Mumps linear solver (default solver enabled)" FORCE)
 set(COIN_HAS_MUMPS_INCLUDE_PATH "None" CACHE PATH "The MUMPS linear solver include Path")
 set(COIN_HAS_MUMPS_LIBRARY_PATH "None" CACHE PATH "The MUMPS linear solver absolute library Path")
 
