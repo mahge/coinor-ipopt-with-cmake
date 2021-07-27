@@ -10,7 +10,11 @@
  * Solution is [1 2]^T */
 #include <stdio.h>
 #include <string.h>
+#ifdef MPI
 #include "mpi.h"
+#else
+#include "mumps_mpi.h"
+#endif
 #include "dmumps_c.h"
 #define JOB_INIT -1
 #define JOB_END -2

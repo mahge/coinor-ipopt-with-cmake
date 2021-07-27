@@ -47,7 +47,7 @@
  *   systems. Parallel Computing Vol 32 (2), pp 136-156 (2006).
  *
  */
-#include <mpi.h>
+#include "mumps_mpi.h"
 int MPI_Init(int *pargc, char ***pargv)
 {
   return 0;
