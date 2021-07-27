@@ -718,24 +718,24 @@ include(CTest)
 
 # available colors: {u,b,bg, } black, red, green, yellow, blue, purple, cyan, white, reset
 
-color_message("${color_green}")
-color_message("************************")
-color_message("*                      *")
-color_message("* Configuration sum-up *")
-color_message("*                      *")
-color_message("************************")
-color_message("${color_reset} ")
+# color_message("${color_green}")
+# color_message("************************")
+# color_message("*                      *")
+# color_message("* Configuration sum-up *")
+# color_message("*                      *")
+# color_message("************************")
+# color_message("${color_reset} ")
 
-color_message("${color_cyan}Installation directory:${color_reset} ${CMAKE_INSTALL_PREFIX}")
-color_message("${color_cyan}Build type:${color_reset} ${CMAKE_BUILD_TYPE}")
+# color_message("${color_cyan}Installation directory:${color_reset} ${CMAKE_INSTALL_PREFIX}")
+# color_message("${color_cyan}Build type:${color_reset} ${CMAKE_BUILD_TYPE}")
 
-get_directory_property(ALL_INCLUDES INCLUDE_DIRECTORIES)
-get_directory_property(ALL_LINKS    LINK_DIRECTORIES)
-get_directory_property(ALL_DEFS     COMPILE_DEFINITIONS)
+# get_directory_property(ALL_INCLUDES INCLUDE_DIRECTORIES)
+# get_directory_property(ALL_LINKS    LINK_DIRECTORIES)
+# get_directory_property(ALL_DEFS     COMPILE_DEFINITIONS)
 
-message(STATUS "${color_cyan}Include directories:${color_reset}     ${ALL_INCLUDES}")
-message(STATUS "${color_cyan}Link directories:${color_reset}        ${ALL_LINKS}")
-message(STATUS "${color_cyan}Compilation definitions:${color_reset} ${ALL_DEFS}")
+# message(STATUS "${color_cyan}Include directories:${color_reset}     ${ALL_INCLUDES}")
+# message(STATUS "${color_cyan}Link directories:${color_reset}        ${ALL_LINKS}")
+# message(STATUS "${color_cyan}Compilation definitions:${color_reset} ${ALL_DEFS}")
 
 #
 # Install part
