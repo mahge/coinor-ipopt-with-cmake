@@ -736,5 +736,5 @@ include(CTest)
 # Install part
 #
 
-install(FILES LICENSE README
-        DESTINATION share/coin/doc/Ipopt/)
+install(FILES LICENSE README.md
+        DESTINATION ${CMAKE_INSTALL_DOCDIR})

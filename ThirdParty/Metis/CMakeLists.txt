@@ -126,8 +126,6 @@ if (UNIX)
   target_link_libraries(mtest m)
 endif ()
 
-install(TARGETS metis 
-        DESTINATION lib)
+install(TARGETS metis)
 
-install(TARGETS pmetis kmetis oemetis onmetis mesh2dual mesh2nodal partdmesh partnmesh graphchk
-        DESTINATION bin)
+install(TARGETS pmetis kmetis oemetis onmetis mesh2dual mesh2nodal partdmesh partnmesh graphchk)
