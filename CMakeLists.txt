@@ -308,7 +308,8 @@ if (WIN32)
 endif ()
 
 # Check for a fortran compiler
-include(CMakeDetermineFortranCompiler)
+enable_language(Fortran)
+# include(CMakeDetermineFortranCompiler)
 if (NOT CMAKE_Fortran_COMPILER)
     message(STATUS "WARNING: fortran compiler not found. Disabling f77/f95 bindings")
 endif ()
