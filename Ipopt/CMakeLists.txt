@@ -66,7 +66,7 @@ set(libdir         "${Ipopt_DIR}")
 set(abs_source_dir "${CMAKE_BINARY_DIR}/bin")
 
 install(FILES ${CMAKE_BINARY_DIR}/Ipopt/ipopt.pc
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/pkg-config/)
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkg-config/)
 
 #
 # Build
@@ -384,8 +384,7 @@ if (IPOPT_HAS_AMPL)
 
     set_include_directories(ipopt)
 
-    install(TARGETS ipopt
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
+    install(TARGETS ipopt)
 
     include(${CMAKE_SOURCE_DIR}/ThirdParty/IpoptTests.cmake)
 endif ()
@@ -943,13 +942,11 @@ set(ALL_HDRS ${LINALG_HDRS}
         ${ALGORITHMS_HDRS}
         ${LINEARSOLVERS_HDRS})
 
+
+install(TARGETS libipopt)
+
 install(FILES ${ALL_HDRS}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/coin)
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Ipopt)
 
-install(TARGETS libipopt
-        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/static)
-
-install(FILES AUTHORS
-        DESTINATION ${DATAROOTDIR}/coin/doc/Ipopt/)
+install(FILES ${Ipopt_DIR}/AUTHORS
+        DESTINATION ${CMAKE_INSTALL_DOCDIR}/Ipopt/)
