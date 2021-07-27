@@ -1146,7 +1146,7 @@ C     Let $A_{preproc}$ be the preprocessed matrix to be factored (see
       IF ( (KEEP(50).EQ.2)
      & .AND. (KEEP(95) .EQ. 3)
      & .AND. (IORD .EQ. 7) ) THEN  
-        IORD = 2 
+        IORD = 0 
       ENDIF
       CALL DMUMPS_701( N, KEEP(50), NSLAVES, IORD, 
      &     symmetry, MedDens, NBQD, AvgDens,
@@ -1162,8 +1162,13 @@ C     Let $A_{preproc}$ be the preprocessed matrix to be factored (see
          IF(KEEP(95) .EQ. 2 .AND. IORD .EQ. 0) THEN 
             IF (PROK) WRITE(MP,*)
      &      'WARNING: DMUMPS_195 AMD not available with ', 
-     &      ' compressed ordering -> move to QAMD'
-            IORD = 6
+#if defined(metis) || defined(parmetis)
+     &      'compressed ordering -> move to METIS'
+            IORD = 5
+#else
+     &      'compressed ordering -> move to AMF'
+            IORD = 2
+#endif
          ENDIF
       ELSE
          KEEP(95) = 1
@@ -3642,7 +3647,7 @@ C     Let $A_{preproc}$ be the preprocessed matrix to be factored (see
              IF (NBQD.GE.MAXQD) THEN
                IORD = 6         
              ELSE
-               IORD = 2         
+               IORD = 0         
              ENDIF
           ELSE
              IF (NBQD.GE.MedDens*NPROCS) THEN
@@ -3668,7 +3673,7 @@ C     Let $A_{preproc}$ be the preprocessed matrix to be factored (see
             IF (NBQD.GE.MAXQD) THEN
               IORD = 6  
             ELSE
-              IORD = 2   
+              IORD = 0   
             ENDIF
           ELSE
             IF (NBQD.GE.MedDens*NPROCS) THEN

@@ -86,7 +86,11 @@ MUMPS_SCOTCH( const int * const  n,
               int * const        ncmpa );
 #endif /*scotch or ptscotch*/
 #if defined(ptscotch)
+#ifdef MPI
 #include "mpi.h"
+#else
+#include "mumps_mpi.h"
+#endif
 #include <stdio.h>
 #include "ptscotch.h"
 int mumps_dgraphinit( SCOTCH_Dgraph *, MPI_Fint *, MPI_Fint *);
@@ -96,7 +100,11 @@ void MUMPS_CALL
 MUMPS_DGRAPHINIT(SCOTCH_Dgraph *graphptr, MPI_Fint *comm, MPI_Fint *ierr);
 #endif /*ptscotch*/
 #if defined(parmetis)
+#ifdef MPI
 #include "mpi.h"
+#else
+#include "mumps_mpi.h"
+#endif
 #include "parmetis.h"
 void mumps_parmetis(int *first,      int *vertloctab, 
                    int *edgeloctab, int *numflag, 
