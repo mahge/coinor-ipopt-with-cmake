@@ -10,7 +10,7 @@ if (APPLE)
     set(CMAKE_CXX_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
 endif()
 
-option(COIN_ENABLE_DOWNLOAD_MUMPS        "Enable the download / compilation of Mumps" ON)
+option(COIN_ENABLE_DOWNLOAD_MUMPS        "Enable the download / compilation of Mumps" OFF)
 option(COIN_ENABLE_DOWNLOAD_METIS        "Enable the download / compilation of Metis" OFF)
 option(COIN_ENABLE_DOWNLOAD_ASL          "Enable the download / compilation of Ampl Solver Library" OFF)
 option(COIN_ENABLE_DOWNLOAD_MINGW_LAPACK "Enable the download / compilation of MinGW compiled Blas / Lapack" OFF)
@@ -296,6 +296,12 @@ endif ()
 # #################################################
 # ===> Mumps compilation
 # #################################################
+
+# # Normally this would optionally download MUMPS and compile it as external project.
+# # But we always need MUMPS with OpenModelica. So we have pre-downloaded MUMPS, applied
+# # the patches Ipopt has for it, and added CMake configuration support for it.
+# # So we just add it as a subdirectory here and keep COIN_ENABLE_DOWNLOAD_MUMPS disabled.
+add_subdirectory(MUMPS)
 
 if (COIN_ENABLE_DOWNLOAD_MUMPS)
     set(MUMPS_VERSION "4.10.0")
@@ -592,9 +598,16 @@ set(CMAKE_MAKE_PROGRAM "${CMAKE_MAKE_PROGRAM_OLD}")
 macro(add_library_mod _target)
     add_library (${_target} ${ARGN})
 
-    if (COIN_ENABLE_DOWNLOAD_MUMPS)
-        add_dependencies(${_target} EP_Mumps)
-    endif ()
+    ## We have pre-downloaded MUMPS and added it as a cmake sub_directory
+    ## So just link to the library here. add_dependency does not apply here.
+    # if (COIN_ENABLE_DOWNLOAD_MUMPS)
+    #     add_dependencies(${_target} EP_Mumps)
+    # endif ()
+    target_link_libraries(${_target} PUBLIC coinmumps)
+    ## IF the MUMPS source has been patched with the Ipopt MPI patche already
+    ## we need to define this to signigy that.
+    target_compile_definitions(${_target} PRIVATE COIN_USE_MUMPS_MPI_H)
+
     if (COIN_ENABLE_DOWNLOAD_METIS)
         add_dependencies(${_target} EP_Metis)
     endif ()
