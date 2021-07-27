@@ -122,23 +122,23 @@ endif ()
 
 
 
-add_library(dmumps SHARED ${MUMPS_D_SRCS} ${MUMPS_COMMON_SRCS} ${MUMPS_LIBSEQ_SRCS})
+add_library(coinmumps STATIC ${MUMPS_D_SRCS} ${MUMPS_COMMON_SRCS} ${MUMPS_LIBSEQ_SRCS})
 if (MSVC)
-  target_compile_definitions(dmumps PRIVATE "/DMUMPS_ARITH=MUMPS_ARITH_d")
+  target_compile_definitions(coinmumps PRIVATE "/DMUMPS_ARITH=MUMPS_ARITH_d")
 else ()
-  target_compile_definitions(dmumps PRIVATE "-DMUMPS_ARITH=MUMPS_ARITH_d")
+  target_compile_definitions(coinmumps PRIVATE "-DMUMPS_ARITH=MUMPS_ARITH_d")
 endif ()
-target_link_libraries(dmumps PUBLIC ${LAPACK_LIBRARIES})
+target_link_libraries(coinmumps PUBLIC ${LAPACK_LIBRARIES})
 
 if(THREADS_HAVE_PTHREAD_ARG)
-  target_compile_options(dmumps PUBLIC pthread)
+  target_compile_options(coinmumps PUBLIC pthread)
 endif()
 if(CMAKE_THREAD_LIBS_INIT)
-  target_link_libraries(dmumps PUBLIC ${CMAKE_THREAD_LIBS_INIT})
+  target_link_libraries(coinmumps PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 endif()
 
-target_include_directories(dmumps PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_include_directories(dmumps PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/libseq)
+target_include_directories(coinmumps PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(coinmumps PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/libseq)
 
 
 # if (MUMPS_USE_METIS)
@@ -148,8 +148,8 @@ target_include_directories(dmumps PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/libseq)
 
 ## If you want to check dmumps lib works fine.
 ## See examples/README for instructions running the tests
-add_executable(dsimple_test examples/dsimpletest.F)
-target_link_libraries(dsimple_test dmumps ${LINK_LIBS})
+# add_executable(dsimple_test examples/dsimpletest.F)
+# target_link_libraries(dsimple_test dmumps ${LINK_LIBS})
 
 
 
