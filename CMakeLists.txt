@@ -361,7 +361,7 @@ mark_as_advanced(F77_FUNC
 
 # Manage coverage via lcov automatically
 
-if (COIN_COMPILE_COVERAGE AND NOT ((CMAKE_BUILD_TYPE STREQUAL "DEBUG") OR (CMAKE_BUILD_TYPE STREQUAL "RELWITHDEBINFO")))
+if (COIN_COMPILE_COVERAGE AND NOT ((CMAKE_BUILD_TYPE MATCHES "Debug") OR (CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")))
     message(STATUS "Warning: to enable coverage, you must compile in DEBUG ou RELWITHDEBINFO mode")
 endif ()
 
