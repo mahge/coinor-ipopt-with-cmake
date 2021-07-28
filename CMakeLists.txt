@@ -81,9 +81,9 @@ mark_as_advanced(ENABLE_SHARED_LIBRARIES
         COIN_COVERAGE_CTEST_LABEL)
 
 # Set paths for binary and library generation inside the build directory:
-# set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+# set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
@@ -131,7 +131,7 @@ set(PACKAGE_STRING    "IpOpt")
 set(PACKAGE_TARNAME   "ipopt")
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/ipopt_binary"
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/ipopt_binary"
             CACHE PATH "IpOpt install prefix" FORCE)
 endif ()
 
@@ -200,9 +200,9 @@ if (COIN_HAS_MKL)
             set(MKL_DLL_DIR ${MKL_ROOT}/bin/ia32)
         endif ()
 
-        execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/
-                COMMAND ${CMAKE_COMMAND} -E copy ${MKL_DLL_DIR}/libiomp5md.dll ${CMAKE_BINARY_DIR}/bin/
-                COMMAND ${CMAKE_COMMAND} -E echo "Copying ${MKL_DLL_DIR}/libiomp5md.dll into ${CMAKE_BINARY_DIR}/bin/")
+        execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/bin/
+                COMMAND ${CMAKE_COMMAND} -E copy ${MKL_DLL_DIR}/libiomp5md.dll ${CMAKE_CURRENT_BINARY_DIR}/bin/
+                COMMAND ${CMAKE_COMMAND} -E echo "Copying ${MKL_DLL_DIR}/libiomp5md.dll into ${CMAKE_CURRENT_BINARY_DIR}/bin/")
     endif ()
 
     set(COIN_MKL_LIBS "${MKL_LIBRARIES}")
@@ -326,16 +326,16 @@ if (CMAKE_Fortran_COMPILER)
 
     include(FortranCInterface)
 
-    FortranCInterface_HEADER(${CMAKE_BINARY_DIR}/F77Mangle.h
+    FortranCInterface_HEADER(${CMAKE_CURRENT_BINARY_DIR}/F77Mangle.h
             MACRO_NAMESPACE "F77_"
             SYMBOL_NAMESPACE "F77_")
 
-    file(STRINGS ${CMAKE_BINARY_DIR}/F77Mangle.h CONTENTS REGEX "F77_GLOBAL\\(.*,.*\\) +(.*)")
+    file(STRINGS ${CMAKE_CURRENT_BINARY_DIR}/F77Mangle.h CONTENTS REGEX "F77_GLOBAL\\(.*,.*\\) +(.*)")
     string(REGEX MATCH "F77_GLOBAL\\(.*,.*\\) +(.*)" RESULT ${CONTENTS})
     set(F77_FUNC         "F77_FUNC(name,NAME) ${CMAKE_MATCH_1}")
     set(COIN_LAPACK_FUNC "COIN_LAPACK_FUNC(name,NAME) ${CMAKE_MATCH_1}")
 
-    file(STRINGS ${CMAKE_BINARY_DIR}/F77Mangle.h CONTENTS REGEX "F77_GLOBAL_\\(.*,.*\\) +(.*)")
+    file(STRINGS ${CMAKE_CURRENT_BINARY_DIR}/F77Mangle.h CONTENTS REGEX "F77_GLOBAL_\\(.*,.*\\) +(.*)")
     string(REGEX MATCH "F77_GLOBAL_\\(.*,.*\\) +(.*)" RESULT ${CONTENTS})
     set(F77_FUNC_         "F77_FUNC_(name,NAME) ${CMAKE_MATCH_1}")
     set(COIN_LAPACK_FUNC_ "COIN_LAPACK_FUNC_(name,NAME) ${CMAKE_MATCH_1}")
@@ -390,18 +390,18 @@ if (COIN_COMPILE_COVERAGE)
     # /!\ FAILURE IF AT LEAST ONE TEST FAILS
     # Capturing lcov counters and generating report
     add_custom_target(coverage
-            COMMAND ${LCOV_PATH} --directory ${CMAKE_BINARY_DIR} --zerocounters
-            COMMAND ${LCOV_PATH} --capture --initial --directory ${CMAKE_BINARY_DIR} --output-file ${CMAKE_BINARY_DIR}/coverage.info
-            COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_BINARY_DIR} ${CMAKE_CTEST_COMMAND} -LE "(LONG|FAIL)" -L "${COIN_COVERAGE_CTEST_LABEL}" || true
-            COMMAND ${LCOV_PATH} --capture --directory ${CMAKE_BINARY_DIR} --output-file ${CMAKE_BINARY_DIR}/coverage.info
-            COMMAND ${LCOV_PATH} --remove ${CMAKE_BINARY_DIR}/coverage.info "*/usr/include/*" '${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/*' --output-file ${CMAKE_BINARY_DIR}/coverage.info.cleaned
-            COMMAND ${GENHTML_PATH} -o ${CMAKE_BINARY_DIR}/coverage ${CMAKE_BINARY_DIR}/coverage.info.cleaned
-            COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_BINARY_DIR}/coverage.info ${CMAKE_BINARY_DIR}/coverage.info.cleaned
+            COMMAND ${LCOV_PATH} --directory ${CMAKE_CURRENT_BINARY_DIR} --zerocounters
+            COMMAND ${LCOV_PATH} --capture --initial --directory ${CMAKE_CURRENT_BINARY_DIR} --output-file ${CMAKE_CURRENT_BINARY_DIR}/coverage.info
+            COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CTEST_COMMAND} -LE "(LONG|FAIL)" -L "${COIN_COVERAGE_CTEST_LABEL}" || true
+            COMMAND ${LCOV_PATH} --capture --directory ${CMAKE_CURRENT_BINARY_DIR} --output-file ${CMAKE_CURRENT_BINARY_DIR}/coverage.info
+            COMMAND ${LCOV_PATH} --remove ${CMAKE_CURRENT_BINARY_DIR}/coverage.info "*/usr/include/*" '${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/*' --output-file ${CMAKE_CURRENT_BINARY_DIR}/coverage.info.cleaned
+            COMMAND ${GENHTML_PATH} -o ${CMAKE_CURRENT_BINARY_DIR}/coverage ${CMAKE_CURRENT_BINARY_DIR}/coverage.info.cleaned
+            COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_CURRENT_BINARY_DIR}/coverage.info ${CMAKE_CURRENT_BINARY_DIR}/coverage.info.cleaned
             VERBATIM
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
             COMMENT "Resetting code coverage counters to zero.
 Processing code coverage counters and generating report.
-You can zip the directory ${CMAKE_BINARY_DIR}/coverage and upload the content to a web server.")
+You can zip the directory ${CMAKE_CURRENT_BINARY_DIR}/coverage and upload the content to a web server.")
 endif ()
 
 
@@ -615,18 +615,18 @@ set(coin_doxy_tagname )
 find_package(Doxygen)
 
 if (DOXYGEN AND COIN_ENABLE_DOXYGEN)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/doxydoc/doxygen.conf.in ${CMAKE_BINARY_DIR}/doxydoc/doxygen.conf)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/doxydoc/doxygen.conf.in ${CMAKE_CURRENT_BINARY_DIR}/doxydoc/doxygen.conf)
 
     add_custom_target(docs
-            ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/doxydoc/doxygen.conf)
+            ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxydoc/doxygen.conf)
 endif ()
 
 add_subdirectory(ThirdParty)
 
-include_directories(${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/include
-        ${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/include/ampl)
-link_directories(${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib
-        ${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib64)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/include
+        ${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/include/ampl)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib
+        ${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib64)
 
 #
 # HSL Management

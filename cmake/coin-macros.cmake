@@ -31,7 +31,7 @@ macro(coin_check_and_add_include_library_path dir)
     else ()
       include_directories(${${dir}}/include)
     endif ()
-    
+
     if (NOT EXISTS "${${dir}}/lib")
       message(FATAL_ERROR "Error: ${dir} = ${${dir}}/lib which is not an existing directory")
     else ()
@@ -65,12 +65,12 @@ endmacro()
 
 find_package(PythonInterp REQUIRED)
 
-set(COIN_TEST_LOG_DIR  "${CMAKE_BINARY_DIR}/tests" CACHE PATH "The log and output directory for tests")
+set(COIN_TEST_LOG_DIR  "${CMAKE_CURRENT_BINARY_DIR}/tests" CACHE PATH "The log and output directory for tests")
 
 mark_as_advanced(COIN_TEST_LOG_DIR)
 
-if (NOT EXISTS ${CMAKE_BINARY_DIR}/CoinTests)
-  make_directory(${CMAKE_BINARY_DIR}/CoinTests)
+if (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/CoinTests)
+  make_directory(${CMAKE_CURRENT_BINARY_DIR}/CoinTests)
 endif ()
 
 if (NOT EXISTS ${COIN_TEST_LOG_DIR})
@@ -84,24 +84,24 @@ endif ()
 
 macro(add_coin_test Name SolverName FileData)
   if (WIN32)
-    file(WRITE ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat "cmd.exe /C \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${SolverName} ${FileData} %COIN_EXE_OPTIONS% -solution ${COIN_TEST_LOG_DIR}/${Name}.out -solve > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
-    
+    file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat "cmd.exe /C \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${SolverName} ${FileData} %COIN_EXE_OPTIONS% -solution ${COIN_TEST_LOG_DIR}/${Name}.out -solve > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
+
     add_test(NAME ${Name}
-             COMMAND ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat)
+             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat)
   else ()
-    file(WRITE ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh "sh -c \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${SolverName} ${FileData} $COIN_EXE_OPTIONS -solution ${COIN_TEST_LOG_DIR}/${Name}.out -solve > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
-    
-    execute_process(COMMAND chmod a+x ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
+    file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh "sh -c \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${SolverName} ${FileData} $COIN_EXE_OPTIONS -solution ${COIN_TEST_LOG_DIR}/${Name}.out -solve > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
+
+    execute_process(COMMAND chmod a+x ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
     add_test(NAME ${Name}
-             COMMAND ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
+             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
   endif ()
-  
+
   if (WIN32)
     # Escape each ';' in the %PATH% environment variable
     string(REGEX REPLACE "\\\\" "/" WINPATH "$ENV{PATH}")
     string(REGEX REPLACE "\;" "\\\\;" WINPATH "${WINPATH}")
-      
-    set(ENV_COIN_TESTS "PATH=${WINPATH}\\;${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib\\;${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/bin")
+
+    set(ENV_COIN_TESTS "PATH=${WINPATH}\\;${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib\\;${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/bin")
     set_tests_properties(${Name} PROPERTIES ENVIRONMENT "PATH=${ENV_COIN_TESTS}")
   endif ()
 endmacro()
@@ -117,7 +117,7 @@ macro(add_coin_test_list SolverName Prefix Suffix FileList Label Timeout)
   foreach(File ${${FileList}})
     get_filename_component(_NAME ${File} NAME)
     string(REGEX REPLACE "[\\.]" "_" _NAME "${_NAME}")
-    
+
     add_coin_test(${Prefix}_${_NAME}_${Suffix} ${SolverName} ${File})
 
     if (NOT COIN_TESTS_DISABLE_TIMEOUT)
@@ -136,24 +136,24 @@ endmacro()
 
 macro(add_coin_sym_test Name SolverName FileData)
   if (WIN32)
-    file(WRITE ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat "cmd.exe /C \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/symphony.exe -F ${FileData} %COIN_EXE_OPTIONS% > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
-    
+    file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat "cmd.exe /C \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/symphony.exe -F ${FileData} %COIN_EXE_OPTIONS% > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
+
     add_test(NAME ${Name}
-             COMMAND ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat)
+             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat)
   else ()
-    file(WRITE ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh "sh -c \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/symphony -F ${FileData} $COIN_EXE_OPTIONS > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
-    
-    execute_process(COMMAND chmod a+x ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
+    file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh "sh -c \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/symphony -F ${FileData} $COIN_EXE_OPTIONS > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
+
+    execute_process(COMMAND chmod a+x ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
     add_test(NAME ${Name}
-             COMMAND ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
+             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
   endif ()
-  
+
   if (WIN32)
     # Escape each ';' in the %PATH% environment variable
     string(REGEX REPLACE "\\\\" "/" WINPATH "$ENV{PATH}")
     string(REGEX REPLACE "\;" "\\\\;" WINPATH "${WINPATH}")
-      
-    set(ENV_COIN_TESTS "PATH=${WINPATH}\\;${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib\\;${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/bin")
+
+    set(ENV_COIN_TESTS "PATH=${WINPATH}\\;${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib\\;${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/bin")
     set_tests_properties(${Name} PROPERTIES ENVIRONMENT "PATH=${ENV_COIN_TESTS}")
   endif ()
 endmacro()
@@ -169,7 +169,7 @@ macro(add_coin_sym_test_list SolverName Prefix Suffix FileList Label Timeout)
   foreach(File ${${FileList}})
     get_filename_component(_NAME ${File} NAME)
     string(REGEX REPLACE "[\\.]" "_" _NAME "${_NAME}")
-    
+
     add_coin_sym_test(${Prefix}_${_NAME}_${Suffix} ${SolverName} ${File})
 
     if (NOT COIN_TESTS_DISABLE_TIMEOUT)
@@ -188,24 +188,24 @@ endmacro()
 
 macro(add_coin_vol_test Name SolverName FileData)
   if (WIN32)
-    file(WRITE ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat "cmd.exe /C \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/vollp.exe -F ${FileData} > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
-    
+    file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat "cmd.exe /C \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/vollp.exe -F ${FileData} > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
+
     add_test(NAME ${Name}
-             COMMAND ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat)
+             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat)
   else ()
-    file(WRITE ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh "sh -c \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/vollp -F ${FileData} > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
-    
-    execute_process(COMMAND chmod a+x ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
+    file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh "sh -c \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/vollp -F ${FileData} > ${COIN_TEST_LOG_DIR}/${Name}.log 2>&1 \"")
+
+    execute_process(COMMAND chmod a+x ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
     add_test(NAME ${Name}
-             COMMAND ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
+             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
   endif ()
-  
+
   if (WIN32)
     # Escape each ';' in the %PATH% environment variable
     string(REGEX REPLACE "\\\\" "/" WINPATH "$ENV{PATH}")
     string(REGEX REPLACE "\;" "\\\\;" WINPATH "${WINPATH}")
-      
-    set(ENV_COIN_TESTS "PATH=${WINPATH}\\;${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib\\;${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/bin")
+
+    set(ENV_COIN_TESTS "PATH=${WINPATH}\\;${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib\\;${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/bin")
     set_tests_properties(${Name} PROPERTIES ENVIRONMENT "PATH=${ENV_COIN_TESTS}")
   endif ()
 endmacro()
@@ -220,7 +220,7 @@ macro(add_coin_vol_test_list Prefix Suffix FileList Label Timeout)
   foreach(File ${${FileList}})
     get_filename_component(_NAME ${File} NAME)
     string(REGEX REPLACE "[\\.]" "_" _NAME "${_NAME}")
-    
+
     add_coin_test(${Prefix}_${_NAME}_${Suffix} osi_vol ${File})
 
     if (NOT COIN_TESTS_DISABLE_TIMEOUT)
@@ -238,57 +238,57 @@ endmacro()
 # FileData: the name of the mps / lp data file
 
 macro(add_coin_dylp_test Name SolverName FileData)
-  if (NOT EXISTS ${CMAKE_BINARY_DIR}/tmp)
-    make_directory(${CMAKE_BINARY_DIR}/tmp)
+  if (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/tmp)
+    make_directory(${CMAKE_CURRENT_BINARY_DIR}/tmp)
   endif ()
-  
+
   get_filename_component(FileData_EXT ${FileData} EXT)
   get_filename_component(FileData_NAME ${FileData} NAME)
-  
+
   if ((FileData_EXT STREQUAL ".mps.gz") OR (FileData_EXT STREQUAL ".lp.gz") OR (FileData_EXT STREQUAL ".gz"))
     string(REGEX REPLACE ".gz" "" FileData_NAME_NOGZ ${FileData_NAME})
-    
+
     if (WIN32)
-      file(WRITE ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat
-           "cmd.exe /C \"${CMAKE_COMMAND} -E copy ${FileData} ${CMAKE_BINARY_DIR}/tmp "
-           " && gunzip.exe -f ${CMAKE_BINARY_DIR}/tmp/${FileData_NAME} "
-           " && ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/osi_dylp.exe -L ${COIN_TEST_LOG_DIR}/${Name}.log -e ${CMAKE_CURRENT_SOURCE_DIR}/DyLP/src/Dylp/dy_errmsgs.txt ${CMAKE_BINARY_DIR}/tmp/${FileData_NAME_NOGZ})\"")
-      
+      file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat
+           "cmd.exe /C \"${CMAKE_COMMAND} -E copy ${FileData} ${CMAKE_CURRENT_BINARY_DIR}/tmp "
+           " && gunzip.exe -f ${CMAKE_CURRENT_BINARY_DIR}/tmp/${FileData_NAME} "
+           " && ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/osi_dylp.exe -L ${COIN_TEST_LOG_DIR}/${Name}.log -e ${CMAKE_CURRENT_SOURCE_DIR}/DyLP/src/Dylp/dy_errmsgs.txt ${CMAKE_CURRENT_BINARY_DIR}/tmp/${FileData_NAME_NOGZ})\"")
+
       add_test(NAME ${Name}
-               COMMAND ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat)
+               COMMAND ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat)
     else ()
-      file(WRITE ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh
-           "sh -c \"${CMAKE_COMMAND} -E copy ${FileData} ${CMAKE_BINARY_DIR}/tmp "
-           " && gunzip -f ${CMAKE_BINARY_DIR}/tmp/${FileData_NAME} "
-           " && ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/osi_dylp -L ${COIN_TEST_LOG_DIR}/${Name}.log -e ${CMAKE_CURRENT_SOURCE_DIR}/DyLP/src/Dylp/dy_errmsgs.txt ${CMAKE_BINARY_DIR}/tmp/${FileData_NAME_NOGZ})\"")
-      
-      execute_process(COMMAND chmod a+x ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
+      file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh
+           "sh -c \"${CMAKE_COMMAND} -E copy ${FileData} ${CMAKE_CURRENT_BINARY_DIR}/tmp "
+           " && gunzip -f ${CMAKE_CURRENT_BINARY_DIR}/tmp/${FileData_NAME} "
+           " && ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/osi_dylp -L ${COIN_TEST_LOG_DIR}/${Name}.log -e ${CMAKE_CURRENT_SOURCE_DIR}/DyLP/src/Dylp/dy_errmsgs.txt ${CMAKE_CURRENT_BINARY_DIR}/tmp/${FileData_NAME_NOGZ})\"")
+
+      execute_process(COMMAND chmod a+x ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
       add_test(NAME ${Name}
-               COMMAND ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
+               COMMAND ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
     endif ()
   else ()
     if (WIN32)
-      file(WRITE ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat
+      file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat
            "cmd /C \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/osi_dylp.exe -L ${COIN_TEST_LOG_DIR}/${Name}.log -e ${CMAKE_CURRENT_SOURCE_DIR}/DyLP/src/Dylp/dy_errmsgs.txt ${FileData})\"")
 
       add_test(NAME ${Name}
-               COMMAND ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat)
+               COMMAND ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.bat)
     else ()
-      file(WRITE ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh
+      file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh
            "sh -c \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/osi_dylp -L ${COIN_TEST_LOG_DIR}/${Name}.log -e ${CMAKE_CURRENT_SOURCE_DIR}/DyLP/src/Dylp/dy_errmsgs.txt ${FileData})\"")
-      
-      execute_process(COMMAND chmod a+x ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
+
+      execute_process(COMMAND chmod a+x ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
       add_test(NAME ${Name}
-               COMMAND ${CMAKE_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
+               COMMAND ${CMAKE_CURRENT_BINARY_DIR}/CoinTests/${Name}_${SolverName}.sh)
     endif ()
   endif ()
-  
+
   if (WIN32)
     # Escape each ';' in the %PATH% environment variable
     string(REGEX REPLACE "\\\\" "/" WINPATH "$ENV{PATH}")
     string(REGEX REPLACE "\;" "\\\\;" WINPATH "${WINPATH}")
-      
-    set(ENV_COIN_TESTS "PATH=${WINPATH}\\;${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib\\;${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/bin")
+
+    set(ENV_COIN_TESTS "PATH=${WINPATH}\\;${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/lib\\;${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR}/bin")
     set_tests_properties(${Name} PROPERTIES ENVIRONMENT "PATH=${ENV_COIN_TESTS}")
   endif ()
 endmacro()
@@ -303,7 +303,7 @@ macro(add_coin_dylp_test_list Prefix Suffix FileList Label Timeout)
   foreach(File ${${FileList}})
     get_filename_component(_NAME ${File} NAME)
     string(REGEX REPLACE "[\\.]" "_" _NAME "${_NAME}")
-    
+
     add_coin_test(${Prefix}_${_NAME}_${Suffix} osi_dylp ${File})
 
     if (NOT COIN_TESTS_DISABLE_TIMEOUT)
@@ -325,7 +325,7 @@ macro(create_log_analysis Name AdditionalName TestRegex TestRefVal TestRelLevel)
   add_test(NAME ${Name}_${AdditionalName}
            WORKING_DIRECTORY ${BinTestPath}
            COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/parse_results.py ${COIN_TEST_LOG_DIR}/${Name}.log ${TestRegex} ${TestRefVal} ${TestRelLevel})
-    
+
   set_tests_properties(${Name}_${AdditionalName} PROPERTIES DEPENDS "${TestName}_${TestSolverName}")
   set_tests_properties(${Name}_${AdditionalName} PROPERTIES ENVIRONMENT "${TEST_ENV_VAR}")
   set_tests_properties(${Name}_${AdditionalName} PROPERTIES PASS_REGULAR_EXPRESSION "PASSED")
@@ -432,40 +432,40 @@ endmacro()
 # set(LIST_SRCS file1.cpp
 #               file2.cpp
 #               file3.cpp)
-# 
+#
 # set(LIST_TO_ADD_SRCS file4.cpp
 #                      file5.cpp
 #                      file6.cpp)
-# 
+#
 # set(VERSION "1.1")
-# 
+#
 # add_source_files(LIST_SRCS "${LIST_TO_ADD_SRCS}" "1.0" "${VERSION}")
-# 
+#
 # set(LIST_TO_ADD_SRCS file7.cpp)
-# 
+#
 # set(VERSION "0.9")
-# 
+#
 # add_source_files(LIST_SRCS "${LIST_TO_ADD_SRCS}" "1.0" "${VERSION}")
-# 
+#
 # message(STATUS "RESULT: ADD - LIST_SRCS = ${LIST_SRCS}")
-# 
+#
 # set(LIST_TO_REMOVE_SRCS file4.cpp)
-# 
+#
 # set(VERSION "1.1")
-# 
+#
 # remove_source_files(LIST_SRCS LIST_TO_REMOVE_SRCS "1.0" "${VERSION}")
-# 
+#
 # set(LIST_TO_REMOVE_SRCS file5.cpp)
-# 
+#
 # set(VERSION "0.9")
-# 
+#
 # remove_source_files(LIST_SRCS LIST_TO_REMOVE_SRCS "1.0" "${VERSION}")
-# 
+#
 # message(STATUS "RESULT: REMOVE - LIST_SRCS = ${LIST_SRCS}")
 
 macro(add_ipopt_test Name FileData)
   add_test(NAME ${Name}
-           COMMAND ${CMAKE_BINARY_DIR}/bin/ipopt -- ${FileData})
+           COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bin/ipopt -- ${FileData})
 endmacro()
 
 macro(add_ipopt_test_list Prefix Suffix FileList Label Timeout)
