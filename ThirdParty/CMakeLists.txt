@@ -107,7 +107,7 @@ if (COIN_ENABLE_DOWNLOAD_CLAPACK)
         endif ()
     endif ()
 
-    set(COIN_HAS_LAPACK ON CACHE BOOL "Enable the Lapack support of CoinUtils" FORCE)
+    set(IPOPT_HAS_LAPACK ON CACHE BOOL "Enable the Lapack support of CoinUtils" FORCE)
     set(COIN_HAS_BLAS   ON CACHE BOOL "Enable the Blas support of CoinUtils"   FORCE)
 
     set(CLAPACK_URL        "http:////netlib.sandia.gov/clapack/clapack-${CLAPACK_VERSION}-CMAKE.tgz" CACHE FILEPATH "Path to clapack-${CLAPACK_VERSION}-CMAKE.tgz source archive")
@@ -166,7 +166,7 @@ if (COIN_ENABLE_DOWNLOAD_LAPACK)
         endif ()
     endif ()
 
-    set(COIN_HAS_LAPACK ON CACHE BOOL "Enable the Lapack support of CoinUtils" FORCE)
+    set(IPOPT_HAS_LAPACK ON CACHE BOOL "Enable the Lapack support of CoinUtils" FORCE)
     set(COIN_HAS_BLAS   ON CACHE BOOL "Enable the Blas support of CoinUtils"   FORCE)
 
     set(LAPACK_URL        "http:////www.netlib.org/lapack/lapack-${LAPACK_VERSION}.tar.gz" CACHE FILEPATH "Path to lapack-${LAPACK_VERSION}.tgz source archive")
@@ -206,10 +206,10 @@ if (COIN_ENABLE_FIND_LAPACK)
     find_package(BLAS)
 
     if (LAPACK_FOUND AND BLAS_FOUND)
-        set(COIN_HAS_LAPACK ON CACHE BOOL "Enable the Lapack support of CoinUtils" FORCE)
+        set(IPOPT_HAS_LAPACK ON CACHE BOOL "Enable the Lapack support of CoinUtils" FORCE)
         set(COIN_HAS_BLAS   ON CACHE BOOL "Enable the Blas support of CoinUtils"   FORCE)
     else ()
-        set(COIN_HAS_LAPACK OFF CACHE BOOL "Enable the Lapack support of CoinUtils" FORCE)
+        set(IPOPT_HAS_LAPACK OFF CACHE BOOL "Enable the Lapack support of CoinUtils" FORCE)
         set(COIN_HAS_BLAS   OFF CACHE BOOL "Enable the Blas support of CoinUtils"   FORCE)
     endif ()
 endif ()
@@ -225,7 +225,7 @@ endif ()
 if (COIN_ENABLE_DOWNLOAD_MINGW_LAPACK)
     set(COIN_MINGW_LAPACK_ZIP_FILE "None" CACHE FILEPATH "Path to the zip file containing MinGW Lapack")
 
-    set(COIN_HAS_LAPACK ON CACHE BOOL "Enable the Lapack support of CoinUtils" FORCE)
+    set(IPOPT_HAS_LAPACK ON CACHE BOOL "Enable the Lapack support of CoinUtils" FORCE)
     set(COIN_HAS_BLAS   ON CACHE BOOL "Enable the Blas support of CoinUtils"   FORCE)
 
     ExternalProject_Add(EP_Lapack
@@ -305,7 +305,7 @@ add_subdirectory(MUMPS)
 
 if (COIN_ENABLE_DOWNLOAD_MUMPS)
     set(MUMPS_VERSION "4.10.0")
-    set(COIN_HAS_MUMPS  ON CACHE BOOL "Clp uses the MUMPS linear solver" FORCE)
+    set(IPOPT_HAS_MUMPS  ON CACHE BOOL "Clp uses the MUMPS linear solver" FORCE)
     set(IPOPT_HAS_MUMPS ON CACHE BOOL "Enable Mumps solver" FORCE)
 
     set(MUMPS_DEPENDS "")
@@ -359,7 +359,7 @@ endif ()
 
 if (COIN_ENABLE_DOWNLOAD_ASL)
     set(ASL_VERSION "3.1.0")
-    set(COIN_HAS_ASL ON CACHE BOOL "Enable the ASL support" FORCE)
+    set(IPOPT_HAS_ASL ON CACHE BOOL "Enable the ASL support" FORCE)
 
     set(ASL_URL        "https:////github.com/ampl/mp/archive/${ASL_VERSION}.tar.gz" CACHE FILEPATH "Path to ${ASL_VERSION}.tar.gz source archive")
     set(ASL_InstallDir "${EP_InstallDir}/ASL-${ASL_VERSION}/${CMAKE_CFG_INTDIR}/")
@@ -390,12 +390,12 @@ endif ()
 # #################################################
 
 if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL "None")
-    set(COIN_HAS_HSL ON CACHE BOOL "Enable the HSL support" FORCE)
-    set(COIN_HAS_HSL_OTHER OFF CACHE BOOL "Enable the non local solver HSL support" FORCE)
+    set(IPOPT_HAS_HSL ON CACHE BOOL "Enable the HSL support" FORCE)
+    set(IPOPT_HAS_HSL_OTHER OFF CACHE BOOL "Enable the non local solver HSL support" FORCE)
 
     set(COINHSL_HAS_METIS  "${COIN_ENABLE_DOWNLOAD_METIS}")
     set(COINHSL_HSL2013    OFF)
-    set(COIN_HAS_HSL_OTHER OFF)
+    set(IPOPT_HAS_HSL_OTHER OFF)
 
     set(COINHSL_VERSION "2014.01.17")
     set(COINHSL_VERSION_MAJOR   2014)
@@ -405,7 +405,7 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
     set(HSL_SOLVER_SRCS )
     set(HSL_OTHER_SRCS )
 
-    set(COIN_HAS_HSL       OFF CACHE INTERNAL "")
+    set(IPOPT_HAS_HSL       OFF CACHE INTERNAL "")
     set(COINHSL_HAS_MA27   OFF CACHE INTERNAL "")
     set(COINHSL_HAS_MA28   OFF CACHE INTERNAL "")
     set(COINHSL_HAS_MC19   OFF CACHE INTERNAL "")
@@ -414,10 +414,10 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
     set(COINHSL_HAS_MA77   OFF CACHE INTERNAL "")
     set(COINHSL_HAS_MC68   OFF CACHE INTERNAL "")
     set(COINHSL_HAS_MA97   OFF CACHE INTERNAL "")
-    set(COIN_HAS_HSL_OTHER OFF CACHE INTERNAL "")
+    set(IPOPT_HAS_HSL_OTHER OFF CACHE INTERNAL "")
 
     if (COIN_USE_COINHSL)
-        set(COIN_HAS_HSL     ON CACHE INTERNAL "")
+        set(IPOPT_HAS_HSL     ON CACHE INTERNAL "")
         set(COINHSL_HAS_MA27 ON CACHE INTERNAL "")
         set(COINHSL_HAS_MA28 ON CACHE INTERNAL "")
         set(COINHSL_HAS_MC19 ON CACHE INTERNAL "")
@@ -432,7 +432,7 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
     else ()
         if (EXISTS ${COIN_HSL_PATH}/ma27/ma27d.f)
             set(COINHSL_HAS_MA27 ON CACHE INTERNAL "")
-            set(COIN_HAS_HSL     ON CACHE INTERNAL "")
+            set(IPOPT_HAS_HSL     ON CACHE INTERNAL "")
 
             add_definitions(-DCOINHSL_HAS_MA27)
 
@@ -441,7 +441,7 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
         endif ()
         if (EXISTS ${COIN_HSL_PATH}/ma28/ma28d.f)
             set(COINHSL_HAS_MA28 ON CACHE INTERNAL "")
-            set(COIN_HAS_HSL     ON CACHE INTERNAL "")
+            set(IPOPT_HAS_HSL     ON CACHE INTERNAL "")
 
             add_definitions(-DCOINHSL_HAS_MA28)
 
@@ -450,7 +450,7 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
         endif ()
         if (EXISTS ${COIN_HSL_PATH}/mc19/mc19d.f)
             set(COINHSL_HAS_MC19 ON CACHE INTERNAL "")
-            set(COIN_HAS_HSL     ON CACHE INTERNAL "")
+            set(IPOPT_HAS_HSL     ON CACHE INTERNAL "")
 
             add_definitions(-DCOINHSL_HAS_MC19)
 
@@ -461,7 +461,7 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
 
     if (EXISTS ${COIN_HSL_PATH}/ma57/ma57d.f)
         set(COINHSL_HAS_MA57   ON CACHE INTERNAL "")
-        set(COIN_HAS_HSL_OTHER ON CACHE INTERNAL "")
+        set(IPOPT_HAS_HSL_OTHER ON CACHE INTERNAL "")
 
         add_definitions(-DCOINHSL_HAS_MA57)
 
@@ -470,7 +470,7 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
     endif ()
     if (EXISTS ${COIN_HSL_PATH}/ma86/ma86d.f)
         set(COINHSL_HAS_MA86   ON CACHE INTERNAL "")
-        set(COIN_HAS_HSL_OTHER ON CACHE INTERNAL "")
+        set(IPOPT_HAS_HSL_OTHER ON CACHE INTERNAL "")
 
         add_definitions(-DCOINHSL_HAS_MA86)
 
@@ -479,7 +479,7 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
     endif ()
     if (EXISTS ${COIN_HSL_PATH}/ma77/ma77d.f)
         set(COINHSL_HAS_MA77   ON CACHE INTERNAL "")
-        set(COIN_HAS_HSL_OTHER ON CACHE INTERNAL "")
+        set(IPOPT_HAS_HSL_OTHER ON CACHE INTERNAL "")
 
         add_definitions(-DCOINHSL_HAS_MA77)
 
@@ -488,7 +488,7 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
     endif ()
     if (EXISTS ${COIN_HSL_PATH}/mc68/mc68.f)
         set(COINHSL_HAS_MC68   ON CACHE INTERNAL "")
-        set(COIN_HAS_HSL_OTHER ON CACHE INTERNAL "")
+        set(IPOPT_HAS_HSL_OTHER ON CACHE INTERNAL "")
 
         add_definitions(-DCOINHSL_HAS_MC68)
 
@@ -497,7 +497,7 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
     endif ()
     if (EXISTS ${COIN_HSL_PATH}/ma97/ma97d.f)
         set(COINHSL_HAS_MA97   ON CACHE INTERNAL "")
-        set(COIN_HAS_HSL_OTHER ON CACHE INTERNAL "")
+        set(IPOPT_HAS_HSL_OTHER ON CACHE INTERNAL "")
 
         add_definitions(-DCOINHSL_HAS_MA97)
 
@@ -506,7 +506,7 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
     endif ()
 
     if (COINHSL_HSL2013)
-        set(COIN_HAS_HSL ON CACHE INTERNAL "")
+        set(IPOPT_HAS_HSL ON CACHE INTERNAL "")
 
         add_definitions(-DCOINHSL_HSL2013)
     endif ()
@@ -516,7 +516,7 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
 
     add_library(hsl SHARED ${HSL_SOLVER_SRCS})
     add_library(hsl-static STATIC ${HSL_SOLVER_SRCS})
-    if (COIN_HAS_HSL_OTHER)
+    if (IPOPT_HAS_HSL_OTHER)
         add_library(hsl-other STATIC ${HSL_OTHER_SRCS})
     endif ()
 
