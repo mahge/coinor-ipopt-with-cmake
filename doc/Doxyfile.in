@@ -2139,10 +2139,10 @@ PREDEFINED             = IPOPT_HAS_ASL \
                          HAVE_CFLOAT \
                          HAVE_CIEEEFP \
                          HAVE_DLFCN_H \
-                         HAVE_DRAND48 \
+                         IPOPT_HAS_DRAND48 \
                          HAVE_PARDISO \
                          HAVE_SNPRINTF \
-                         HAVE_VA_COPY \
+                         IPOPT_HAS_VA_COPY \
                          HAVE_VSNPRINTF \
                          HAVE_WSMP \
                          F77_FUNC(x)=x \

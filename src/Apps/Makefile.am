@@ -6,6 +6,6 @@
 
 SUBDIRS =
 
-if COIN_HAS_ASL
+if IPOPT_HAS_ASL
   SUBDIRS += AmplSolver
 endif
