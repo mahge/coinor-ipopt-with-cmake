@@ -904,6 +904,8 @@ set(COMMON_HDRS ${Ipopt_DIR}/src/Common/IpCachedResults.hpp
         ${Ipopt_DIR}/src/Common/IpJournalist.hpp
         ${Ipopt_DIR}/src/Common/IpObserver.hpp
         ${Ipopt_DIR}/src/Common/IpOptionsList.hpp
+        ${Ipopt_DIR}/src/Common/IpoptConfig.h
+        ${Ipopt_DIR}/src/Common/config_ipopt_default.h
         ${Ipopt_DIR}/src/Common/IpReferenced.hpp
         ${Ipopt_DIR}/src/Common/IpRegOptions.hpp
         ${Ipopt_DIR}/src/Common/IpSmartPtr.hpp
