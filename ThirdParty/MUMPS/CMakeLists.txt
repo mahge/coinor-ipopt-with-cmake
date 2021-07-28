@@ -7,6 +7,7 @@ project (MUMPS C CXX Fortran)
 ## libseq is maybe to use MPI. This is what I have understood so far.
 # option(MUMPS_USE_LIBSEQ   "Use the MUMPS sequential MPI stub" ON)
 
+option(MUMPS_BUILD_SHARED_LIBS    "Build libraries as shared libraries"  OFF)
 option(MUMPS_USE_METIS    "Use the Metis library"             OFF)
 
 find_package(LAPACK REQUIRED)
@@ -121,8 +122,12 @@ else ()
 endif ()
 
 
+if(MUMPS_BUILD_SHARED_LIBS)
+  add_library(coinmumps SHARED ${MUMPS_D_SRCS} ${MUMPS_COMMON_SRCS} ${MUMPS_LIBSEQ_SRCS})
+else()
+  add_library(coinmumps STATIC ${MUMPS_D_SRCS} ${MUMPS_COMMON_SRCS} ${MUMPS_LIBSEQ_SRCS})
+endif()
 
-add_library(coinmumps STATIC ${MUMPS_D_SRCS} ${MUMPS_COMMON_SRCS} ${MUMPS_LIBSEQ_SRCS})
 if (MSVC)
   target_compile_definitions(coinmumps PRIVATE "/DMUMPS_ARITH=MUMPS_ARITH_d")
 else ()
