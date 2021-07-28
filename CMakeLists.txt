@@ -33,7 +33,7 @@ set(COIN_HAS_WSMP_INCLUDE_PATH "None" CACHE PATH "The WSMP linear solver include
 set(COIN_HAS_WSMP_LIBRARY_PATH "None" CACHE PATH "The WSMP linear solver absolute library Path")
 
 # Compilation options
-option(ENABLE_SHARED_LIBRARIES       "Build libraries as shared libraries" OFF)
+option(IPOPT_BUILD_SHARED_LIBS       "Build libraries as shared libraries" OFF)
 option(COIN_COMPILE_STATIC           "Activate the static linking" ON)
 option(COIN_COMPILE_COVERAGE         "Activate the code coverage compilation" OFF)
 option(COIN_COMPILE_PROFILE          "Activate the code profiling compilation" OFF)
@@ -54,8 +54,7 @@ set(COIN_DIR "${CMAKE_CURRENT_SOURCE_DIR}" CACHE PATH "The Cbc Path")
 
 set(COIN_COVERAGE_CTEST_LABEL "SAMPLE" CACHE PATH "The label sent to ctest during coverage")
 
-mark_as_advanced(ENABLE_SHARED_LIBRARIES
-        COIN_ENABLE_READLINE
+mark_as_advanced(COIN_ENABLE_READLINE
         COIN_COMPILE_STATIC
         COIN_COMPILE_COVERAGE
         COIN_COMPILE_PROFILE
@@ -238,7 +237,7 @@ if (UNIX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated")
     set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -Wno-deprecated")
 
-    if (NOT ENABLE_SHARED_LIBRARIES)
+    if (NOT IPOPT_BUILD_SHARED_LIBS)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
         set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fPIC")
     endif ()
