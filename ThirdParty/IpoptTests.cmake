@@ -1,6 +1,6 @@
 include(coin-macros)
 
-set(EP_InstallDir ${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR})
+set(EP_InstallDir ${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR})
 set(IPOPT_INSTANCES_DIR "${EP_InstallDir}/ASL-1.3.0/src/EP_ASL/test/data")
 
 # Invalide nl tests:

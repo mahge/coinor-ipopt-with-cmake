@@ -36,8 +36,8 @@ mark_as_advanced(IPOPT_VERSION_MAJOR
 
 add_definitions(-DIPOPT_BUILD)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/config.h.in       ${CMAKE_BINARY_DIR}/Ipopt/include/config.h)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/config_ipopt.h.in ${CMAKE_BINARY_DIR}/Ipopt/include/config_ipopt.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/config.h.in       ${CMAKE_CURRENT_BINARY_DIR}/Ipopt/include/config.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/config_ipopt.h.in ${CMAKE_CURRENT_BINARY_DIR}/Ipopt/include/config_ipopt.h)
 
 #
 # pkg-config file generation
@@ -60,12 +60,12 @@ if (COIN_ENABLE_DOWNLOAD_CLAPACK)
 endif ()
 set(PACKAGE_VERSION "${IPOPT_VERSION}")
 
-configure_file(${Ipopt_DIR}/ipopt.pc.in ${CMAKE_BINARY_DIR}/Ipopt/ipopt.pc @ONLY)
+configure_file(${Ipopt_DIR}/ipopt.pc.in ${CMAKE_CURRENT_BINARY_DIR}/Ipopt/ipopt.pc @ONLY)
 
 set(libdir         "${Ipopt_DIR}")
-set(abs_source_dir "${CMAKE_BINARY_DIR}/bin")
+set(abs_source_dir "${CMAKE_CURRENT_BINARY_DIR}/bin")
 
-install(FILES ${CMAKE_BINARY_DIR}/Ipopt/ipopt.pc
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Ipopt/ipopt.pc
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkg-config/)
 
 #
@@ -256,7 +256,7 @@ if (IPOPT_ENABLE_INEXACT)
 endif ()
 
 macro(set_include_directories TARGET)
-    target_include_directories(${TARGET} BEFORE PRIVATE ${CMAKE_BINARY_DIR}/Ipopt/include)
+    target_include_directories(${TARGET} BEFORE PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/Ipopt/include)
 endmacro ()
 
 if (EXISTS ${Ipopt_DIR}/ThirdParty/HSL)
@@ -386,7 +386,7 @@ if (IPOPT_HAS_AMPL)
 
     install(TARGETS ipopt)
 
-    include(${CMAKE_SOURCE_DIR}/ThirdParty/IpoptTests.cmake)
+    include(${CMAKE_CURRENT_SOUR_DIR}/ThirdParty/IpoptTests.cmake)
 endif ()
 
 if (IPOPT_BUILD_EXAMPLES)
@@ -809,8 +809,8 @@ if (IPOPT_BUILD_EXAMPLES)
             set(BIT64FCOMMENT "C")
         endif ()
 
-        configure_file(${Ipopt_DIR}/examples/hs071_f/hs071_f.f.in ${CMAKE_BINARY_DIR}/hs071_f.f)
-        set(hs071_f_SRCS ${CMAKE_BINARY_DIR}/hs071_f.f)
+        configure_file(${Ipopt_DIR}/examples/hs071_f/hs071_f.f.in ${CMAKE_CURRENT_BINARY_DIR}/hs071_f.f)
+        set(hs071_f_SRCS ${CMAKE_CURRENT_BINARY_DIR}/hs071_f.f)
 
         add_executable_mod(hs071_f ${hs071_f_SRCS})
         target_link_libraries(hs071_f libipopt)
