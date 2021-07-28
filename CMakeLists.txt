@@ -21,14 +21,14 @@ option(IPOPT_ENABLE_LINEARSOLVERLOADER  "Build the dynamic linear solver loader"
 option(IPOPT_ENABLE_PARDISOSOLVERLOADER "Build the dynamic pardiso solver loader" OFF)
 option(IPOPT_ENABLE_INEXACT             "Build the inexact solver" OFF)
 
-set(COIN_IPOPT_CHECKLEVEL "0" CACHE STRING "The debug sanity check level of IpOpt (0 if no test)")
-set(COIN_IPOPT_VERBOSITY  "0" CACHE STRING "The debug verbosity level of IpOpt (0 if no output)")
+set(IPOPT_CHECKLEVEL "0" CACHE STRING "The debug sanity check level of IpOpt (0 if no test)")
+set(IPOPT_VERBOSITY  "0" CACHE STRING "The debug verbosity level of IpOpt (0 if no output)")
 
-set(COIN_HAS_MUMPS ON CACHE BOOL "Enable the Mumps linear solver (default solver enabled)" FORCE)
-set(COIN_HAS_MUMPS_INCLUDE_PATH "None" CACHE PATH "The MUMPS linear solver include Path")
-set(COIN_HAS_MUMPS_LIBRARY_PATH "None" CACHE PATH "The MUMPS linear solver absolute library Path")
+set(IPOPT_HAS_MUMPS ON CACHE BOOL "Enable the Mumps linear solver (default solver enabled)" FORCE)
+set(IPOPT_HAS_MUMPS_INCLUDE_PATH "None" CACHE PATH "The MUMPS linear solver include Path")
+set(IPOPT_HAS_MUMPS_LIBRARY_PATH "None" CACHE PATH "The MUMPS linear solver absolute library Path")
 
-set(COIN_HAS_WSMP OFF CACHE BOOL "Enable the WSMP linear solver" FORCE)
+set(IPOPT_HAS_WSMP OFF CACHE BOOL "Enable the WSMP linear solver" FORCE)
 set(COIN_HAS_WSMP_INCLUDE_PATH "None" CACHE PATH "The WSMP linear solver include Path")
 set(COIN_HAS_WSMP_LIBRARY_PATH "None" CACHE PATH "The WSMP linear solver absolute library Path")
 
@@ -65,18 +65,18 @@ mark_as_advanced(ENABLE_SHARED_LIBRARIES
         COIN_USE_FAST_CODE
         COIN_COMPILE_WARNINGS
         COIN_COMPILE_CXX11
-        COIN_HAS_MUMPS
-        COIN_HAS_MUMPS_INCLUDE_PATH
-        COIN_HAS_MUMPS_LIBRARY_PATH
-        COIN_HAS_WSMP
+        IPOPT_HAS_MUMPS
+        IPOPT_HAS_MUMPS_INCLUDE_PATH
+        IPOPT_HAS_MUMPS_LIBRARY_PATH
+        IPOPT_HAS_WSMP
         COIN_HAS_WSMP_INCLUDE_PATH
         COIN_HAS_WSMP_LIBRARY_PATH
         COIN_DIR
         IPOPT_HAS_PARDISO_MKL
         IPOPT_HAS_PARDISO_OLDINTERFACE
         IPOPT_HAS_PARDISO_PARALLEL
-        COIN_IPOPT_CHECKLEVEL
-        COIN_IPOPT_VERBOSITY
+        IPOPT_CHECKLEVEL
+        IPOPT_VERBOSITY
         USE_PROCESSOR_EXTENSIONS
         COIN_COVERAGE_CTEST_LABEL)
 
@@ -220,13 +220,13 @@ if (COIN_HAS_MKL)
         link_directories(${MKLROOT_PATH}/mkl/lib/ia32)
     endif ()
 
-    set(COIN_HAS_LAPACK ON CACHE BOOL "Use Intel MKL library (requires Intel compiler)")
+    set(IPOPT_HAS_LAPACK ON CACHE BOOL "Use Intel MKL library (requires Intel compiler)")
 endif ()
 
 # Check some directories
 
-coin_check_and_add_include_path(COIN_HAS_MUMPS_INCLUDE_PATH)
-coin_check_and_add_library_path(COIN_HAS_MUMPS_LIBRARY_PATH)
+coin_check_and_add_include_path(IPOPT_HAS_MUMPS_INCLUDE_PATH)
+coin_check_and_add_library_path(IPOPT_HAS_MUMPS_LIBRARY_PATH)
 coin_check_and_add_include_path(COIN_HAS_WSMP_INCLUDE_PATH)
 coin_check_and_add_library_path(COIN_HAS_WSMP_LIBRARY_PATH)
 
@@ -314,8 +314,8 @@ if (NOT CMAKE_Fortran_COMPILER)
     message(STATUS "WARNING: fortran compiler not found. Disabling f77/f95 bindings")
 endif ()
 
-# Define FORTRAN_INTEGER_TYPE for Ipopt.
-set(FORTRAN_INTEGER_TYPE int)
+# Define IPOPT_FORTRAN_INTEGER_TYPE for Ipopt.
+set(IPOPT_FORTRAN_INTEGER_TYPE int)
 
 #-----------------------------------------------------------------------------
 # Detect name mangling convention used between Fortran and C
@@ -333,17 +333,17 @@ if (CMAKE_Fortran_COMPILER)
     file(STRINGS ${CMAKE_CURRENT_BINARY_DIR}/F77Mangle.h CONTENTS REGEX "F77_GLOBAL\\(.*,.*\\) +(.*)")
     string(REGEX MATCH "F77_GLOBAL\\(.*,.*\\) +(.*)" RESULT ${CONTENTS})
     set(F77_FUNC         "F77_FUNC(name,NAME) ${CMAKE_MATCH_1}")
-    set(COIN_LAPACK_FUNC "COIN_LAPACK_FUNC(name,NAME) ${CMAKE_MATCH_1}")
+    set(IPOPT_LAPACK_FUNC "IPOPT_LAPACK_FUNC(name,NAME) ${CMAKE_MATCH_1}")
 
     file(STRINGS ${CMAKE_CURRENT_BINARY_DIR}/F77Mangle.h CONTENTS REGEX "F77_GLOBAL_\\(.*,.*\\) +(.*)")
     string(REGEX MATCH "F77_GLOBAL_\\(.*,.*\\) +(.*)" RESULT ${CONTENTS})
     set(F77_FUNC_         "F77_FUNC_(name,NAME) ${CMAKE_MATCH_1}")
-    set(COIN_LAPACK_FUNC_ "COIN_LAPACK_FUNC_(name,NAME) ${CMAKE_MATCH_1}")
+    set(IPOPT_LAPACK_FUNC_ "IPOPT_LAPACK_FUNC_(name,NAME) ${CMAKE_MATCH_1}")
 else ()
     set(F77_FUNC          "F77_FUNC(name,NAME)  name##_")
     set(F77_FUNC_         "F77_FUNC_(name,NAME) name##__")
-    set(COIN_LAPACK_FUNC  "COIN_LAPACK_FUNC(name,NAME)  name##_")
-    set(COIN_LAPACK_FUNC_ "COIN_LAPACK_FUNC_(name,NAME) name##__")
+    set(IPOPT_LAPACK_FUNC  "IPOPT_LAPACK_FUNC(name,NAME)  name##_")
+    set(IPOPT_LAPACK_FUNC_ "IPOPT_LAPACK_FUNC_(name,NAME) name##__")
 endif ()
 
 set(F77_DUMMY_MAIN "" CACHE STRING "Define to dummy 'main' function (if any) required to link to the Fortran libraries.")
@@ -502,29 +502,29 @@ include(CheckCXXSymbolExists)
 include(CheckFunctionExists)
 
 set(CMAKE_REQUIRED_LIBRARIES m)
-check_cxx_symbol_exists(std::isfinite "cmath" COIN_C_FINITE_R)
-if (COIN_C_FINITE_R)
-    set(COIN_C_FINITE std::isfinite)
+check_cxx_symbol_exists(std::isfinite "cmath" IPOPT_C_FINITE_R)
+if (IPOPT_C_FINITE_R)
+    set(IPOPT_C_FINITE std::isfinite)
 endif ()
-if (NOT COIN_C_FINITE_R)
+if (NOT IPOPT_C_FINITE_R)
     set(CMAKE_REQUIRED_LIBRARIES m)
-    check_symbol_exists(isfinite "math.h" COIN_C_FINITE_R)
-    if (COIN_C_FINITE_R)
-        set(COIN_C_FINITE isfinite)
+    check_symbol_exists(isfinite "math.h" IPOPT_C_FINITE_R)
+    if (IPOPT_C_FINITE_R)
+        set(IPOPT_C_FINITE isfinite)
     endif ()
 endif ()
-if (NOT COIN_C_FINITE_R)
+if (NOT IPOPT_C_FINITE_R)
     set(CMAKE_REQUIRED_LIBRARIES m)
-    check_symbol_exists(_finite "math.h" COIN_C_FINITE_R)
-    if (COIN_C_FINITE_R)
-        set(COIN_C_FINITE _finite)
+    check_symbol_exists(_finite "math.h" IPOPT_C_FINITE_R)
+    if (IPOPT_C_FINITE_R)
+        set(IPOPT_C_FINITE _finite)
     endif ()
 endif ()
-if (NOT COIN_C_FINITE_R)
+if (NOT IPOPT_C_FINITE_R)
     set(CMAKE_REQUIRED_LIBRARIES m)
-    check_symbol_exists(finite "math.h" COIN_C_FINITE_R)
-    if (COIN_C_FINITE_R)
-        set(COIN_C_FINITE finite)
+    check_symbol_exists(finite "math.h" IPOPT_C_FINITE_R)
+    if (IPOPT_C_FINITE_R)
+        set(IPOPT_C_FINITE finite)
     endif ()
 endif ()
 
@@ -558,11 +558,11 @@ endif ()
 check_symbol_exists(clock_gettime time.h     HAVE_CLOCK_GETTIME)
 check_symbol_exists(gettimeofday  sys/time.h HAVE_GETTIMEOFDAY)
 
-check_function_exists(dran48     HAVE_DRAND48)
-check_function_exists(rand       HAVE_RAND)
+check_function_exists(dran48     IPOPT_HAS_DRAND48)
+check_function_exists(rand       IPOPT_HAS_RAND)
 check_function_exists(snprintf   HAVE_SNPRINTF)
 check_function_exists(std::rand  HAVE_STD__RAND)
-check_function_exists(va_copy    HAVE_VA_COPY)
+check_function_exists(va_copy    IPOPT_HAS_VA_COPY)
 check_function_exists(vsnprintf  HAVE_VSNPRINTF)
 check_function_exists(_snprintf  HAVE__SNPRINTF)
 check_function_exists(_vsnprintf HAVE__VSNPRINTF)
@@ -576,7 +576,7 @@ if (WIN32)
     set(HAVE__SNPRINTF  1)
     set(HAVE_VSNPRINTF  1)
     set(HAVE__VSNPRINTF 1)
-    set(HAVE_VA_COPY    1)
+    set(IPOPT_HAS_VA_COPY    1)
 endif ()
 
 if (COIN_USE_FAST_CODE)

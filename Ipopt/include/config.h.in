@@ -4,28 +4,28 @@
 #cmakedefine  BUILD_INEXACT
 
 /* Define to be the name of C-function for Inf check */
-#define COIN_C_FINITE @COIN_C_FINITE@
+#define IPOPT_C_FINITE @IPOPT_C_FINITE@
 
 /* Define to 1 if the ASL package is available */
-#cmakedefine COIN_HAS_ASL
+#cmakedefine IPOPT_HAS_ASL
 
 /* If defined, the BLAS Library is available. */
 #cmakedefine COIN_HAS_BLAS
 
 /* Define to 1 if the HSL package is available */
-#cmakedefine COIN_HAS_HSL
+#cmakedefine IPOPT_HAS_HSL
 
 /* If defined, the LAPACK Library is available. */
-#cmakedefine COIN_HAS_LAPACK
+#cmakedefine IPOPT_HAS_LAPACK
 
 /* Define to 1 if the Mumps package is available */
-#cmakedefine COIN_HAS_MUMPS
+#cmakedefine IPOPT_HAS_MUMPS
 
 /* Define to the debug sanity check level (0 is no test) */
-#define COIN_IPOPT_CHECKLEVEL @COIN_IPOPT_CHECKLEVEL@
+#define IPOPT_CHECKLEVEL @IPOPT_CHECKLEVEL@
 
 /* Define to the debug verbosity level (0 is no output) */
-#define COIN_IPOPT_VERBOSITY @COIN_IPOPT_VERBOSITY@
+#define IPOPT_VERBOSITY @IPOPT_VERBOSITY@
 
 /* Define to dummy `main' function (if any) required to link to the Fortran
    libraries. */
@@ -37,7 +37,7 @@
 
 /* Define to a macro mangling the given C identifier (in lower and upper
    case), which must not contain underscores, for linking with Fortran. */
-#define @COIN_LAPACK_FUNC@
+#define @IPOPT_LAPACK_FUNC@
 
 /* As F77_FUNC, but for C identifiers containing underscores. */
 #define @F77_FUNC_@
@@ -46,7 +46,7 @@
 #cmakedefine FC_DUMMY_MAIN_EQ_F77 @FC_DUMMY_MAIN_EQ_F77@
 
 /* Define to the C type corresponding to Fortran INTEGER */
-#define FORTRAN_INTEGER_TYPE @FORTRAN_INTEGER_TYPE@
+#define IPOPT_FORTRAN_INTEGER_TYPE @IPOPT_FORTRAN_INTEGER_TYPE@
 
 /* Define to 1 if you have the <assert.h> header file. */
 #cmakedefine HAVE_ASSERT_H
@@ -91,7 +91,7 @@
 #cmakedefine HAVE_DLFCN_H
 
 /* Define to 1 if function drand48 is available */
-#cmakedefine HAVE_DRAND48
+#cmakedefine IPOPT_HAS_DRAND48
 
 /* Define to 1 if you have the <float.h> header file. */
 #cmakedefine HAVE_FLOAT_H
@@ -128,7 +128,7 @@
 #cmakedefine HAVE_PARDISO_PARALLEL
 
 /* Define to 1 if function rand is available */
-#cmakedefine HAVE_RAND
+#cmakedefine IPOPT_HAS_RAND
 
 /* Define to 1 if you have the `snprintf' function. */
 #cmakedefine HAVE_SNPRINTF
@@ -170,7 +170,7 @@
 #cmakedefine HAVE_UNISTD_H
 
 /* Define to 1 if va_copy is available */
-#cmakedefine HAVE_VA_COPY
+#cmakedefine IPOPT_HAS_VA_COPY
 
 /* Define to 1 if you have the `vsnprintf' function. */
 #cmakedefine HAVE_VSNPRINTF
