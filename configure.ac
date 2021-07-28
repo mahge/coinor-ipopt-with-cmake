@@ -124,7 +124,7 @@ AC_ARG_WITH([pardiso],
 have_pardiso_mkl=no
 if test "$have_pardiso_project" = yes ; then
   # check whether flags from --with-pardiso work and figure out name mangling
-  # if so, define PARDISO_FUNC and keep lflags
+  # if so, define IPOPT_PARDISO_FUNC and keep lflags
   AC_COIN_TRY_LINK([pardiso_ipopt_newinterface],[$pardiso_lflags $lapack_lflags],[$lapack_pcfiles],
     [AC_COIN_DEFINENAMEMANGLING([IPOPT_PARDISO],[$pardiso_ipopt_newinterface_namemangling])
      IPOPTLIB_LFLAGS="$pardiso_lflags $IPOPTLIB_LFLAGS"
@@ -137,7 +137,7 @@ if test "$have_pardiso_project" = yes ; then
 
 elif test "$with_pardiso" != no ; then
   # check whether Pardiso is available via Lapack, which should then be MKL
-  # figure out name mangling and define PARDISO_FUNC
+  # figure out name mangling and define IPOPT_PARDISO_FUNC
   AC_COIN_TRY_LINK([pardiso],[$lapack_lflags],[$lapack_pcfiles],
     [AC_COIN_DEFINENAMEMANGLING([IPOPT_PARDISO],[$pardiso_namemangling])
      have_pardiso_mkl=yes
@@ -340,7 +340,7 @@ fi
 if test "$enable_java" != no ; then
   # the following macros can make configure stop with an error
   # we could work around that, but having javac and no jar, java, or javadoc would be odd anyway
-  
+
   # look for jar: required to pack Java interface
   AX_PROG_JAR
   # look for more java to run tests and examples and do documentation
@@ -523,7 +523,7 @@ AC_COIN_FINALIZE_FLAGS([IpoptLib IpoptAmplInterfaceLib SIpoptAmplInterfaceLib])
 AC_CONFIG_FILES([Makefile
 		 src/Common/Makefile
 		 src/LinAlg/Makefile
-		 src/LinAlg/TMatrices/Makefile 
+		 src/LinAlg/TMatrices/Makefile
 		 src/Interfaces/Makefile
 		 src/Algorithm/Makefile
 		 src/Algorithm/LinearSolvers/Makefile
@@ -579,7 +579,7 @@ fi
 
 
 # under Windows, the Makevars file for the R Interface need to be named Makevars.win
-case $build in 
+case $build in
   *-cygwin* | *-mingw* | *-msys* )
     AC_CONFIG_FILES([contrib/RInterface/src/Makevars.win:contrib/RInterface/src/Makevars.in])
     ;;

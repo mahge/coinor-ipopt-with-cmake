@@ -14,9 +14,9 @@ macro(VA_COPY)
         return 0;
     }")
 
-  try_compile(HAVE_VA_COPY ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/cmake_try_compile.c)
+  try_compile(IPOPT_HAS_VA_COPY ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/cmake_try_compile.c)
 
-  if (HAVE_VA_COPY)
+  if (IPOPT_HAS_VA_COPY)
     set(VA_COPY va_copy CACHE STRING "va_copy function")
   else ()
     write_file("${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/cmake_try_compile.c"
@@ -34,7 +34,7 @@ macro(VA_COPY)
             return 0;
       }")
 
-    try_compile(HAVE_VA_COPY ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/cmake_try_compile.c)
+    try_compile(IPOPT_HAS_VA_COPY ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/cmake_try_compile.c)
 
     if (HAVE___VA_COPY)
       set(_VA_COPY __va_copy CACHE STRING "va_copy function")

@@ -673,23 +673,23 @@ HAVE_MA28_FALSE
 HAVE_MA28_TRUE
 HSLLIB_CFLAGS_NOPC
 HSLLIB_LFLAGS_NOPC
-COIN_HAS_HSL_FALSE
-COIN_HAS_HSL_TRUE
+IPOPT_HAS_HSL_FALSE
+IPOPT_HAS_HSL_TRUE
 HSLLIB_PCFILES
 HSLLIB_CFLAGS
 HSLLIB_LFLAGS
-COIN_HAS_MUMPS_FALSE
-COIN_HAS_MUMPS_TRUE
-COIN_HAS_ASL_FALSE
-COIN_HAS_ASL_TRUE
+IPOPT_HAS_MUMPS_FALSE
+IPOPT_HAS_MUMPS_TRUE
+IPOPT_HAS_ASL_FALSE
+IPOPT_HAS_ASL_TRUE
 SIPOPTAMPLINTERFACELIB_PCFILES
 SIPOPTAMPLINTERFACELIB_CFLAGS
 SIPOPTAMPLINTERFACELIB_LFLAGS
 IPOPTAMPLINTERFACELIB_PCFILES
 IPOPTAMPLINTERFACELIB_CFLAGS
 IPOPTAMPLINTERFACELIB_LFLAGS
-COIN_HAS_LAPACK_FALSE
-COIN_HAS_LAPACK_TRUE
+IPOPT_HAS_LAPACK_FALSE
+IPOPT_HAS_LAPACK_TRUE
 COIN_PKG_CONFIG_PATH
 COIN_HAS_PKGCONFIG_FALSE
 COIN_HAS_PKGCONFIG_TRUE
@@ -22777,16 +22777,16 @@ $as_echo "$ac_success" >&6; }
   fi
 
    if test $coin_has_lapack = yes; then
-  COIN_HAS_LAPACK_TRUE=
-  COIN_HAS_LAPACK_FALSE='#'
+  IPOPT_HAS_LAPACK_TRUE=
+  IPOPT_HAS_LAPACK_FALSE='#'
 else
-  COIN_HAS_LAPACK_TRUE='#'
-  COIN_HAS_LAPACK_FALSE=
+  IPOPT_HAS_LAPACK_TRUE='#'
+  IPOPT_HAS_LAPACK_FALSE=
 fi
 
 
-  # If we've located the package, define preprocessor symbol COIN_HAS_LAPACK
-  # and COIN_LAPACK_FUNC[_] and augment the necessary variables for the client packages.
+  # If we've located the package, define preprocessor symbol IPOPT_HAS_LAPACK
+  # and IPOPT_LAPACK_FUNC[_] and augment the necessary variables for the client packages.
   if test $coin_has_lapack = yes ; then
 
 $as_echo "#define IPOPT_HAS_LAPACK 1" >>confdefs.h
@@ -23069,11 +23069,11 @@ $as_echo "$coin_has_asl due to COIN_SKIP_PROJECTS" >&6; }
   fi
 
    if test $coin_has_asl = yes; then
-  COIN_HAS_ASL_TRUE=
-  COIN_HAS_ASL_FALSE='#'
+  IPOPT_HAS_ASL_TRUE=
+  IPOPT_HAS_ASL_FALSE='#'
 else
-  COIN_HAS_ASL_TRUE='#'
-  COIN_HAS_ASL_FALSE=
+  IPOPT_HAS_ASL_TRUE='#'
+  IPOPT_HAS_ASL_FALSE=
 fi
 
 
@@ -23313,11 +23313,11 @@ $as_echo "$coin_has_mumps due to COIN_SKIP_PROJECTS" >&6; }
   fi
 
    if test $coin_has_mumps = yes; then
-  COIN_HAS_MUMPS_TRUE=
-  COIN_HAS_MUMPS_FALSE='#'
+  IPOPT_HAS_MUMPS_TRUE=
+  IPOPT_HAS_MUMPS_FALSE='#'
 else
-  COIN_HAS_MUMPS_TRUE='#'
-  COIN_HAS_MUMPS_FALSE=
+  IPOPT_HAS_MUMPS_TRUE='#'
+  IPOPT_HAS_MUMPS_FALSE=
 fi
 
 
@@ -23571,11 +23571,11 @@ $as_echo "$coin_has_hsl due to COIN_SKIP_PROJECTS" >&6; }
   fi
 
    if test $coin_has_hsl = yes; then
-  COIN_HAS_HSL_TRUE=
-  COIN_HAS_HSL_FALSE='#'
+  IPOPT_HAS_HSL_TRUE=
+  IPOPT_HAS_HSL_FALSE='#'
 else
-  COIN_HAS_HSL_TRUE='#'
-  COIN_HAS_HSL_FALSE=
+  IPOPT_HAS_HSL_TRUE='#'
+  IPOPT_HAS_HSL_FALSE=
 fi
 
 
@@ -23900,7 +23900,7 @@ fi
 have_pardiso_mkl=no
 if test "$have_pardiso_project" = yes ; then
   # check whether flags from --with-pardiso work and figure out name mangling
-  # if so, define PARDISO_FUNC and keep lflags
+  # if so, define IPOPT_PARDISO_FUNC and keep lflags
 
   ac_save_LIBS="$LIBS"
   LIBS="$pardiso_lflags $lapack_lflags $LIBS"
@@ -24113,7 +24113,7 @@ $as_echo "#define IPOPT_HAS_PARDISO_PARALLEL 1" >>confdefs.h
 
 elif test "$with_pardiso" != no ; then
   # check whether Pardiso is available via Lapack, which should then be MKL
-  # figure out name mangling and define PARDISO_FUNC
+  # figure out name mangling and define IPOPT_PARDISO_FUNC
 
   ac_save_LIBS="$LIBS"
   LIBS="$lapack_lflags $LIBS"
@@ -24540,7 +24540,7 @@ done
 
 
 
-  COIN_C_FINITE=
+  IPOPT_C_FINITE=
 
 
 
@@ -24578,7 +24578,7 @@ $as_echo_n "checking for std::isfinite... " >&6; }
 
 _ACEOF
 if ac_fn_cxx_try_compile "$LINENO"; then :
-  COIN_C_FINITE=std::isfinite
+  IPOPT_C_FINITE=std::isfinite
      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 else
@@ -24589,7 +24589,7 @@ fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
 
-  if test -z "$COIN_C_FINITE"; then
+  if test -z "$IPOPT_C_FINITE"; then
     for fname in isfinite finite _finite ; do
       as_ac_Symbol=`$as_echo "ac_cv_have_decl_$fname" | $as_tr_sh`
 ac_fn_cxx_check_decl "$LINENO" "$fname" "$as_ac_Symbol" "
@@ -24617,22 +24617,22 @@ ac_fn_cxx_check_decl "$LINENO" "$fname" "$as_ac_Symbol" "
 
 "
 if eval test \"x\$"$as_ac_Symbol"\" = x"yes"; then :
-  COIN_C_FINITE=$fname
+  IPOPT_C_FINITE=$fname
 fi
 
-      if test -n "$COIN_C_FINITE" ; then
+      if test -n "$IPOPT_C_FINITE" ; then
         break
       fi
     done
   fi
 
-  if test -z "$COIN_C_FINITE"; then
+  if test -z "$IPOPT_C_FINITE"; then
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Cannot find C-function for checking Inf." >&5
 $as_echo "$as_me: WARNING: Cannot find C-function for checking Inf." >&2;}
   else
 
 cat >>confdefs.h <<_ACEOF
-#define IPOPT_C_FINITE $COIN_C_FINITE
+#define IPOPT_C_FINITE $IPOPT_C_FINITE
 _ACEOF
 
   fi
@@ -26411,20 +26411,20 @@ if test -z "${COIN_HAS_PKGCONFIG_TRUE}" && test -z "${COIN_HAS_PKGCONFIG_FALSE}"
   as_fn_error $? "conditional \"COIN_HAS_PKGCONFIG\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
-if test -z "${COIN_HAS_LAPACK_TRUE}" && test -z "${COIN_HAS_LAPACK_FALSE}"; then
-  as_fn_error $? "conditional \"COIN_HAS_LAPACK\" was never defined.
+if test -z "${IPOPT_HAS_LAPACK_TRUE}" && test -z "${IPOPT_HAS_LAPACK_FALSE}"; then
+  as_fn_error $? "conditional \"IPOPT_HAS_LAPACK\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
-if test -z "${COIN_HAS_ASL_TRUE}" && test -z "${COIN_HAS_ASL_FALSE}"; then
-  as_fn_error $? "conditional \"COIN_HAS_ASL\" was never defined.
+if test -z "${IPOPT_HAS_ASL_TRUE}" && test -z "${IPOPT_HAS_ASL_FALSE}"; then
+  as_fn_error $? "conditional \"IPOPT_HAS_ASL\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
-if test -z "${COIN_HAS_MUMPS_TRUE}" && test -z "${COIN_HAS_MUMPS_FALSE}"; then
-  as_fn_error $? "conditional \"COIN_HAS_MUMPS\" was never defined.
+if test -z "${IPOPT_HAS_MUMPS_TRUE}" && test -z "${IPOPT_HAS_MUMPS_FALSE}"; then
+  as_fn_error $? "conditional \"IPOPT_HAS_MUMPS\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
-if test -z "${COIN_HAS_HSL_TRUE}" && test -z "${COIN_HAS_HSL_FALSE}"; then
-  as_fn_error $? "conditional \"COIN_HAS_HSL\" was never defined.
+if test -z "${IPOPT_HAS_HSL_TRUE}" && test -z "${IPOPT_HAS_HSL_FALSE}"; then
+  as_fn_error $? "conditional \"IPOPT_HAS_HSL\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${HAVE_MA28_TRUE}" && test -z "${HAVE_MA28_FALSE}"; then

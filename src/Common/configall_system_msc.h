@@ -67,7 +67,7 @@
 /* #undef HAVE_DLFCN_H */
 
 /* Define to 1 if function drand48 is available */
-/* #undef HAVE_DRAND48 */
+/* #undef IPOPT_HAS_DRAND48 */
 
 /* Define to 1 if you have the <float.h> header file. */
 /* #undef HAVE_FLOAT_H */
@@ -121,7 +121,7 @@
 /* #define HAVE_UNISTD_H */
 
 /* Define to 1 if va_copy is avaliable */
-/* #undef HAVE_VA_COPY */
+/* #undef IPOPT_HAS_VA_COPY */
 
 /* Define to 1 if you have the <windows.h> header file. */
 /* #undef HAVE_WINDOWS_H */

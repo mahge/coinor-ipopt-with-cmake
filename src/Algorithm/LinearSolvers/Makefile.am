@@ -41,7 +41,7 @@ if HAVE_WSMP
   liblinsolvers_la_SOURCES += IpWsmpSolverInterface.cpp IpIterativeWsmpSolverInterface.cpp
 endif
 
-if COIN_HAS_MUMPS
+if IPOPT_HAS_MUMPS
   liblinsolvers_la_SOURCES += IpMumpsSolverInterface.cpp
 endif
 
