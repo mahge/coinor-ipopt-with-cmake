@@ -36,7 +36,7 @@ set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM TRUE)
 
 include(ExternalProject)
 
-set(EP_InstallDir ${CMAKE_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR})
+set(EP_InstallDir ${CMAKE_CURRENT_BINARY_DIR}/Dependencies/${CMAKE_CFG_INTDIR})
 
 if (NOT EXISTS ${EP_InstallDir})
     make_directory(${EP_InstallDir})
@@ -244,13 +244,13 @@ if (COIN_ENABLE_DOWNLOAD_MINGW_LAPACK)
             && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libgfortran-3.dll   ${EP_InstallDir}/bin
             && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libquadmath-0.dll   ${EP_InstallDir}/bin
             && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libwinpthread-1.dll ${EP_InstallDir}/bin
-            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/liblapack.dll       ${CMAKE_BINARY_DIR}/bin
-            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libblas.dll         ${CMAKE_BINARY_DIR}/bin
-            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libtmglib.dll       ${CMAKE_BINARY_DIR}/bin
-            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libgcc_s_seh-1.dll  ${CMAKE_BINARY_DIR}/bin
-            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libgfortran-3.dll   ${CMAKE_BINARY_DIR}/bin
-            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libquadmath-0.dll   ${CMAKE_BINARY_DIR}/bin
-            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libwinpthread-1.dll ${CMAKE_BINARY_DIR}/bin
+            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/liblapack.dll       ${CMAKE_CURRENT_BINARY_DIR}/bin
+            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libblas.dll         ${CMAKE_CURRENT_BINARY_DIR}/bin
+            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libtmglib.dll       ${CMAKE_CURRENT_BINARY_DIR}/bin
+            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libgcc_s_seh-1.dll  ${CMAKE_CURRENT_BINARY_DIR}/bin
+            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libgfortran-3.dll   ${CMAKE_CURRENT_BINARY_DIR}/bin
+            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libquadmath-0.dll   ${CMAKE_CURRENT_BINARY_DIR}/bin
+            && ${CMAKE_COMMAND} -E copy ${EP_InstallDir}/MinGW-Lapack/src/EP_Lapack/bin/libwinpthread-1.dll ${CMAKE_CURRENT_BINARY_DIR}/bin
             )
 endif ()
 
@@ -511,8 +511,8 @@ if ((COIN_ENABLE_COMPILE_HSL OR COIN_USE_COINHSL) AND NOT COIN_HSL_PATH STREQUAL
         add_definitions(-DCOINHSL_HSL2013)
     endif ()
 
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../Ipopt/include/config_coinhsl.h.in ${CMAKE_BINARY_DIR}/Ipopt/include/config_coinhsl.h)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../Ipopt/include/config_coinhsl.h.in ${CMAKE_BINARY_DIR}/Ipopt/include/CoinHslConfig.h)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../Ipopt/include/config_coinhsl.h.in ${CMAKE_CURRENT_BINARY_DIR}/Ipopt/include/config_coinhsl.h)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../Ipopt/include/config_coinhsl.h.in ${CMAKE_CURRENT_BINARY_DIR}/Ipopt/include/CoinHslConfig.h)
 
     add_library(hsl SHARED ${HSL_SOLVER_SRCS})
     add_library(hsl-static STATIC ${HSL_SOLVER_SRCS})

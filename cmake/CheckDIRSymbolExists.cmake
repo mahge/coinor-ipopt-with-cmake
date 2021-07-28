@@ -41,13 +41,13 @@ macro(CHECK_DIRSYMBOL_EXISTS FILES VARIABLE)
 
     set(CMAKE_CONFIGURABLE_FILE_CONTENT "${CMAKE_CONFIGURABLE_FILE_CONTENT}\nint main()\n{if ((DIR *) 0) return 0;}\n")
 
-    configure_file("${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in" "${CMAKE_BINARY_DIR}/CMakeFiles/CMakeTmp/CheckDIRSymbolExists.c" @ONLY)
+    configure_file("${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in" "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/CMakeTmp/CheckDIRSymbolExists.c" @ONLY)
 
     message(STATUS "Looking for DIR in ${FILES}")
 
     try_compile(${VARIABLE}
-      ${CMAKE_BINARY_DIR}
-      ${CMAKE_BINARY_DIR}/CMakeFiles/CMakeTmp/CheckDIRSymbolExists.c
+      ${CMAKE_CURRENT_BINARY_DIR}
+      ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/CMakeTmp/CheckDIRSymbolExists.c
       COMPILE_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS}
       CMAKE_FLAGS
       -DCOMPILE_DEFINITIONS:STRING=${MACRO_CHECK_DIRSYMBOL_EXISTS_FLAGS}
@@ -58,18 +58,18 @@ macro(CHECK_DIRSYMBOL_EXISTS FILES VARIABLE)
     if (${VARIABLE})
       message(STATUS "Looking for DIR in ${FILES} - found")
       set(${VARIABLE} 1 CACHE INTERNAL "Have symbol DIR")
-      file(APPEND ${CMAKE_BINARY_DIR}/CMakeFiles/CMakeOutput.log
+      file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/CMakeOutput.log
         "Determining if the DIR symbol is defined as in AC_HEADER_DIRENT "
         "passed with the following output:\n"
-        "${OUTPUT}\nFile ${CMAKE_BINARY_DIR}/CMakeFiles/CMakeTmp/CheckDIRSymbolExists.c:\n"
+        "${OUTPUT}\nFile ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/CMakeTmp/CheckDIRSymbolExists.c:\n"
         "${CMAKE_CONFIGURABLE_FILE_CONTENT}\n")
     else ()
       message(STATUS "Looking for DIR in ${FILES} - not found.")
       set(${VARIABLE} "" CACHE INTERNAL "Have symbol DIR")
-      file(APPEND ${CMAKE_BINARY_DIR}/CMakeFiles/CMakeError.log
+      file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/CMakeError.log
         "Determining if the DIR symbol is defined as in AC_HEADER_DIRENT "
         "failed with the following output:\n"
-        "${OUTPUT}\nFile ${CMAKE_BINARY_DIR}/CMakeFiles/CMakeTmp/CheckDIRSymbolExists.c:\n"
+        "${OUTPUT}\nFile ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/CMakeTmp/CheckDIRSymbolExists.c:\n"
         "${CMAKE_CONFIGURABLE_FILE_CONTENT}\n")
     endif ()
   endif ()
