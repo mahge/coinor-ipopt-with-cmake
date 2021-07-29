@@ -296,7 +296,7 @@ endif ()
 # Manage threads include dir under Windows
 #-----------------------------------------------------------------------------
 
-if (WIN32)
+if (MSVC)
     if (NOT COIN_THREADS_INC_PATH STREQUAL "None")
         include_directories(${COIN_THREADS_INC_PATH})
     endif ()
@@ -456,7 +456,7 @@ string(SUBSTRING ${CMAKE_SHARED_LIBRARY_SUFFIX} 1 -1 SHAREDLIBEXT)
 
 include(CheckCXXCompilerFlag)
 
-if (COIN_COMPILE_CXX11 AND NOT WIN32)
+if (COIN_COMPILE_CXX11 AND NOT MSVC)
     # VS2013 activate C++11 by default
     check_cxx_compiler_flag(-std=c++11 HAVE_STD_CPP11_FLAG)
     if (HAVE_STD_CPP11_FLAG)
@@ -565,7 +565,7 @@ check_function_exists(vsnprintf  HAVE_VSNPRINTF)
 check_function_exists(_snprintf  HAVE__SNPRINTF)
 check_function_exists(_vsnprintf HAVE__VSNPRINTF)
 
-if (WIN32)
+if (MSVC)
     # snprintf not correctly detected under Visual Studio.
     # Hack: we just activate snprintf under Windows.
     # TO BE FIXED

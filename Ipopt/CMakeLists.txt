@@ -274,7 +274,7 @@ include_directories(${Ipopt_DIR}/src/LinAlg)
 include_directories(${Ipopt_DIR}/src/Apps/AmplSolver)
 include_directories(${Ipopt_DIR}/src/LinAlg/TMatrices)
 
-if (WIN32)
+if (MSCV)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE)
 endif ()
 
