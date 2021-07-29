@@ -384,7 +384,8 @@ if (IPOPT_HAS_AMPL)
 
     set_include_directories(ipopt)
 
-    install(TARGETS ipopt)
+    install(TARGETS ipopt
+            DESTINATION ${CMAKE_INSTALL_BINDIR})
 
     include(${CMAKE_CURRENT_SOUR_DIR}/ThirdParty/IpoptTests.cmake)
 endif ()
@@ -945,7 +946,8 @@ set(ALL_HDRS ${LINALG_HDRS}
         ${LINEARSOLVERS_HDRS})
 
 
-install(TARGETS libipopt)
+install(TARGETS libipopt
+        DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 install(FILES ${ALL_HDRS}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Ipopt)

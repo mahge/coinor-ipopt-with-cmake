@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 2.8)
-cmake_policy(SET CMP0075 NEW)
 project(IpOpt)
 
 # FUNNY_LAPACK_FINT

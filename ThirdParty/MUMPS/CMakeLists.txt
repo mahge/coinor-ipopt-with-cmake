@@ -158,7 +158,8 @@ target_include_directories(coinmumps PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/libseq)
 
 
 
-install(TARGETS coinmumps)
+install(TARGETS coinmumps
+        DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 
 # ----------------------------------------------------------------------
