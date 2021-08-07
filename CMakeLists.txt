@@ -86,6 +86,10 @@ mark_as_advanced(COIN_ENABLE_READLINE
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+if (COIN_COMPILE_CXX11)
+    set (CMAKE_CXX_STANDARD 11)
+endif ()
+
 include(coin-macros)
 include(GetAcInitVersion)
 include(CheckCLinkerFlag)
@@ -456,18 +460,6 @@ string(SUBSTRING ${CMAKE_SHARED_LIBRARY_SUFFIX} 1 -1 SHAREDLIBEXT)
 
 include(CheckCXXCompilerFlag)
 
-if (COIN_COMPILE_CXX11 AND NOT MSVC)
-    # VS2013 activate C++11 by default
-    check_cxx_compiler_flag(-std=c++11 HAVE_STD_CPP11_FLAG)
-    if (HAVE_STD_CPP11_FLAG)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    else ()
-        check_cxx_compiler_flag(-std=c++0x HAVE_STD_CPP0X_FLAG)
-        if (HAVE_STD_CPP0X_FLAG)
-            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-        endif ()
-    endif ()
-endif ()
 
 check_cxx_compiler_flag(-Qunused-arguments HAVE_QUNUSED_ARGUMENTS)
 if (HAVE_QUNUSED_ARGUMENTS)
