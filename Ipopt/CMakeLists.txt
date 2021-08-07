@@ -7,6 +7,8 @@ set(IPOPT_VERSION_MAJOR   "${IPOPT_MAJOR_VERSION}"  CACHE STRING "The IpOpt majo
 set(IPOPT_VERSION_MINOR   "${IPOPT_MINOR_VERSION}"  CACHE STRING "The IpOpt minor version number")
 set(IPOPT_VERSION_RELEASE "${IPOPT_PATCH_VERSION}"  CACHE STRING "The IpOpt patch version number")
 set(IPOPT_VERSION         "${IPOPT_VERSION_STRING}" CACHE STRING "The IpOpt version")
+set(PACKAGE_VERSION "${IPOPT_VERSION}")
+
 
 set(IPOPT_WC_REVISION "0")
 if (EXISTS "${Ipopt_DIR}/.svn")
@@ -58,7 +60,6 @@ endif ()
 if (COIN_ENABLE_DOWNLOAD_CLAPACK)
     set(IPOPTLIB_PCFILES "${IPOPTLIB_PCFILES} -lf2c")
 endif ()
-set(PACKAGE_VERSION "${IPOPT_VERSION}")
 
 configure_file(${Ipopt_DIR}/ipopt.pc.in ${CMAKE_CURRENT_BINARY_DIR}/Ipopt/ipopt.pc @ONLY)
 
